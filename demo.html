@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<hand></hand>
+<style>
+    body {background-color:#000001;height: 100%;}
+    #ks
+    {font-size :200px; color: #ffffff;position: relative;top:300px;left:700px;}
+    #killall {font-size :50px;color:#ffffff}
+    #ks2{position: fixed; }
+
+</style>
+
+<body >
+    <script>
+        var ans=0;
+        function emm(x)
+        {document.getElementById("xgz").innerHTML = x;}
+        function xrand()
+        {return 400+Math.floor(Math.random()*700);}
+        function yrand()
+        {return 50+Math.floor(Math.random()*700);}
+        function srand()
+        {return 20*(1+Math.random()*3);}
+    </script>
+    <div onclick=start() id="ks2" >
+        <a id='ks'>
+            开始
+        </a>
+    </div>
+    <script>
+        var t=new Array();var vis=new Array();
+        function move(hd,bd)
+        {   
+            var hdd=document.getElementById(hd),bdd=document.getElementById(bd);
+            var dx=(hdd.width)/2*(1+2*Math.random());
+            if((Math.floor( Math.random()*100))%2) dx=-dx;
+            var tmp1=hdd.style.left.replace("px","");var tmp2=bdd.style.left.replace("px","");
+            var emm1=parseFloat(tmp1)+dx,emm2=parseFloat(tmp2)+dx;
+            if(emm1<=0||emm1>=1200||emm2<=0||emm2>=1200) emm1-=2*dx,emm2-=2*dx; 
+            hdd.style.left=emm1+"px";bdd.style.left=emm2+"px";
+        } 
+        function reset(hd,bd,pts,i)
+        {
+            if(t[i]!=0)
+            {
+                var now= +new Date();
+                console.log(now-t[i]);
+                ans+=1000*pts/(now-t[i]);
+                document.getElementById("xsq").innerHTML="你的得分是："+Math.trunc(ans);
+            }
+            t[i]=+new Date();
+            var hdd=document.getElementById(hd),bdd=document.getElementById(bd);
+            var s=srand();
+            var xx=xrand(),yy=yrand();
+            hdd.width=s;hdd.height=s;
+            hdd.style.left=xx+"px";hdd.style.top=yy+"px";
+            bdd.width=s*3/2;bdd.height=s*2;
+            bdd.style.left=xx-(s/4)+"px";bdd.style.top=yy+s+"px";
+            if(vis[i]) setInterval(function(){move(hd,bd)},500),vis[i]=0;
+        }
+        function start()
+        {
+            var string=document.getElementById("kaishi").value;
+            //var string2=document.getElementById("init").innerHTML;
+            document.write(string);
+            //console.log("<script>"+string2+"<\/script>");
+            t[1]=0;t[2]=0;t[3]=0;t[4]=0;t[5]=0;t[6]=0;vis[1]=1;vis[2]=1;vis[3]=1;vis[4]=1;vis[5]=1;vis[6]=1;
+            reset('hd1','bd1',0,1);reset('hd2','bd2',0,2);reset('hd3','bd3',0,3);
+            reset('hd4','bd4',0,4);reset('hd5','bd5',0,5);reset('hd6','bd6',0,6);
+        }
+        function kill()
+        {
+            reset('hd1','bd1',2,1);reset('hd2','bd2',2,2);reset('hd3','bd3',2,3);
+            reset('hd4','bd4',2,4);reset('hd5','bd5',2,5);reset('hd6','bd6',2,6);
+        }
+        /*window.onload=function ()
+        {
+            
+        }*/
+        
+    </script>
+    
+    <textarea type="text/html" id="kaishi" style="display: none;">
+        <!DOCTYPE html>
+        <style>body{background-color:#000000}</style>
+        <head></head>
+        <body>
+            <style>
+                #xsq{font-size :100px ; color: #ffffff;}
+            </style>
+            <a id="xsq" style="position:absolute;left:700px;top:800px">
+                19260817
+            </a>
+            <a id="killall"  onclick="kill()">
+                kill
+            </a>
+            <img src = ../src/head.png width="80" height="80" style="position:absolute;left:300px;top:300px" 
+                id="hd1" onclick="reset('hd1','bd1',2,1)" onselectstart="return false" />
+            <img src = ../src/body.png width="120" height="160" style="position:absolute;left:280px;top:380px" 
+                id="bd1" onclick="reset('hd1','bd1',1,1)" onselectstart="return false" />
+
+            <img src = ../src/head.png width="30" height="30" style="position:absolute;left:300px;top:300px" 
+                id="hd2" onclick="reset('hd2','bd2',2,2)" onselectstart="return false" />
+            <img src = ../src/body.png width="40" height="60" style="position:absolute;left:300px;top:350px" 
+                id="bd2" onclick="reset('hd2','bd2',1,2)" onselectstart="return false" />
+
+            <img src = ../src/head.png width="30" height="30" style="position:absolute;left:300px;top:300px" 
+                id="hd3" onclick="reset('hd3','bd3',2,3)" onselectstart="return false" />
+            <img src = ../src/body.png width="40" height="60" style="position:absolute;left:300px;top:350px" 
+                id="bd3" onclick="reset('hd3','bd3',1,3)" onselectstart="return false" />
+
+            <img src = ../src/head.png width="30" height="30" style="position:absolute;left:300px;top:300px" 
+                id="hd4" onclick="reset('hd4','bd4',2,4)" onselectstart="return false" />
+            <img src = ../src/body.png width="40" height="60" style="position:absolute;left:300px;top:350px" 
+                id="bd4" onclick="reset('hd4','bd4',1,4)" onselectstart="return false" />    
+            
+            <img src = ../src/head.png width="30" height="30" style="position:absolute;left:300px;top:300px" 
+                id="hd5" onclick="reset('hd5','bd5',2,5)" onselectstart="return false" />
+            <img src = ../src/body.png width="40" height="60" style="position:absolute;left:300px;top:350px" 
+                id="bd5" onclick="reset('hd5','bd5',1,5)" onselectstart="return false" />
+
+            <img src = ../src/head.png width="30" height="30" style="position:absolute;left:300px;top:300px" 
+                id="hd6" onclick="reset('hd6','bd6',2,6)" onselectstart="return false" />
+            <img src = ../src/body.png width="40" height="60" style="position:absolute;left:300px;top:350px" 
+                id="bd6" onclick="reset('hd6','bd6',1,6)" onselectstart="return false" />
+
+        <div style="position:absolute;right: 70px;bottom:100px" >
+            <img src=../src/gun.png width="100%" height="100%" />
+        </div>
+        <script>
+            document.onkeyup = function(event)
+            {
+                if(event.keyCode==65)
+                {
+                    console.log("a");
+                    var x=document.getElementById("hd1");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("hd2");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("hd3");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("hd4");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("hd5");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("hd6");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("bd1");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("bd2");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("bd3");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("bd4");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("bd5");x.style.left=x.offsetLeft+20+"px";
+                    x=document.getElementById("bd6");x.style.left=x.offsetLeft+20+"px";
+                }
+                if(event.keyCode==68)
+                {
+                    var x=document.getElementById("hd1");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("hd2");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("hd3");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("hd4");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("hd5");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("hd6");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("bd1");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("bd2");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("bd3");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("bd4");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("bd5");x.style.left=x.offsetLeft-20+"px";
+                    x=document.getElementById("bd6");x.style.left=x.offsetLeft-20+"px";
+                }
+            }
+        </script>
+       
+        </body>
+        </html>
+    </textarea>
+</body>
+</html>
